@@ -1,0 +1,58 @@
+Copyright (c) 2025 Pantasilea
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software to use, copy, modify, merge, host, and distribute
+copies or modifications of this software without restrictions, provided
+the following conditions are met:
+
+1. You must include this license file, unmodified, in all copies or
+substantial portions or modified versions of this software.
+
+2. If you make a modified version of this software, you must make the
+source code of the modified version available publicly, free of charge,
+and under this same license, even if you merge the source code with
+your own project. You do not need to make the entire source code of
+your own project available and under this same license, only the source
+code pertaining to the modified version of this software.
+
+3. You, as a contributor of this software, cannot sue, charge any form
+of money, or bother anyone using, copying, modifying, merging, hosting,
+or distributing this software or modified versions of this software
+with the reason of patent or copyright infringement. Effectively, you,
+as a contributor of this software, grant a non-exclusive, worldwide,
+royalty-free, and perpetual permission to use, copy, modify, merge,
+host, and distribute your contributions as part of this software or
+modified versions of this software to any person obtaining a copy of
+this software or a modified version of this software.
+
+4. Modified versions of this software must be plainly marked as such
+and must not be misrepresented as being the original software.
+
+If you contribute to this software in any capacity and in any measure,
+you automatically, immediately, and perpetually become a contributor
+of this software.
+
+Being a contributor of this software does not grant you additional
+permissions or any privileges. The only permissions contributors of
+this software have are the ones stated in this license.
+
+If you violate this license, the permissions granted to you with this
+license are automatically and immediately revoked. You can obtain the
+permissions again if you stop violating this license: once 120 days
+have passed since the day you stopped violating this license and you
+have not violated this license again since that day, you can consider
+the permissions restored. The only other way to obtain the permissions
+again is for you to contact one of the authors or copyright holders of
+this software and request them to restore the permissions, if one of
+them accepts your request, you can consider the permissions restored.
+If you violate this license again, the permissions granted to you with
+this license are automatically and immediately revoked again.
+
+The software is provided "as is", without warranty of any kind,
+express or implied, including but not limited to the warranties of
+merchantability, fitness for a particular purpose, title, and
+non-infringement. In no event shall the authors, Copyright holders, or
+contributors be liable for any claim, damages, or other liability,
+whether in contract, tort or otherwise, arising from, out of, or in
+connection with the software, or the use or other dealings in the
+software, even if advised of the possibility of such damage.

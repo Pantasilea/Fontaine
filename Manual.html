@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fontaine's manual</title>
+
+<style>
+body { background-color: #000000; color: #FFFFFF; }
+h1,h2,h3 { color: #449CF5; }
+a { color: #00FFFF; }
+a:visited { color: #EE82EE; }
+</style>
+
+</head>
+<body>
+<h1>Fontaine's manual</h1>
+<p>Fontaine is a command line program whose purpose is to be a simple bitmap font generator.
+Simple means that it does not have fancy functionality like (for example) shadows.
+<br><br>
+Fontaine uses
+<a href="https://freetype.org">FreeType</a> to handle font files, glyph rasterisation and metrics,
+<a href="https://github.com/nemtrif/utfcpp">UTF8-CPP</a> to handle Unicode, and
+<a href="https://www.libpng.org/pub/png/libpng.html">libpng</a> to create PNG images.
+<br><br>
+Fontaine can generate greyscale antialiased normal bitmap fonts and Signed Distance Field
+glyph atlases. In both cases, the generated PNG images have 8 bits per pixel.
+<br><br>
+Fontaine will also generate a single plain text file that will contain the information needed
+to sample and position each glyph. The structure of this file is simple and easy to parse:
+</p>
+<pre>
+<code>
+linespace:41
+65:0:48:30:22:23:-1:23:20:0
+</code>
+</pre>
+<p>The first line gives you the vertical distance between two consecutive baselines. The rest
+of the lines give you a particular glyph's information in the following order:
+</p>
+<ol start="0">
+<li>UTF-32 code point of the glyph</li>
+<li>Which PNG image contains the glyph</li>
+<li>x position of the glyph inside the image</li>
+<li>y position of the glyph inside the image</li>
+<li>Width</li>
+<li>Height</li>
+<li>Left bearing</li>
+<li>Top bearing</li>
+<li>Advance width</li>
+<li>Advance height</li>
+</ol>
+<p>Both x and y will give you the top-left corner of the glyph. Some values of the glyph
+metrics can be negative, this depends on FreeType and that is how FreeType gives them; for
+more information you can read
+<a href="https://freetype.org/freetype2/docs/glyphs/glyphs-3.html">this</a> FreeType page.
+Lastly, all the metrics, including linespace, are given in pixels.
+</p>
+
+<h2>Command line arguments</h2>
+<p>You can supply the command line arguments in any order.</p>
+
+<h3>-font</h3>
+<p>Used to specify the font file. You must supply this argument.</p>
+
+<h3>-font-size</h3>
+<p>Used to specify the font size. This argument is optional and its default value is 32.
+The value of this argument will be passed to FreeType like this:
+</p>
+<code>FT_Set_Pixel_Sizes(font_file, 0, font_size);</code>
+
+<h3>-image-size</h3>
+<p>Used to specify the size of the images that will contain the glyphs. This argument is
+optional and its default value is 256. You don't provide two values to -image-size, but
+instead only one, and that value will be used for both the width and height of the images.
+</p>
+
+<h3>-char-file</h3>
+<p>Used to specify an UTF-8 plain text file that contains the characters you want to be part
+of your bitmap font. This argument is optional and if you do not supply it, all the
+characters in the font file will be included to generate the atlases.
+</p>
+
+<h3>-verify</h3>
+<p>This argument is optional and doesn't receive any values. If you use this argument,
+Fontaine won't generate any atlases. It is used to specify that you want Fontaine to verify
+the existence of particular characters within a font file. You must use this argument along
+-char-file: the characters within the file specified by -char-file will be searched within
+the font file specified by -font and if a particular character is not found it will be
+written to an UTF-8 plain text file named missing-chars.txt so that you can see which
+characters weren't found. If missing-chars.txt is empty, it means all the characters in
+the file specified by -char-file were found.
+</p>
+
+<h3>-output-stem</h3>
+<p>Used to specify the stem of the filename for the atlases and the plain text file. You
+must supply this argument. For example, if you specify 'Japanese' as the value, then the
+atlases will have the following filenames: Japanese-0.png, Japanese-1.png, Japanese-2.png
+(and so on). The plain text file will have the following filename: Japanese.txt
+</p>
+
+<h3>-load-vert-metrics</h3>
+<p>Used to specify that you want to load vertical metrics instead of horizontal metrics.
+This argument is optional and it does not receive any value.
+</p>
+
+<h3>-as-given</h3>
+<p>If you are using -char-file you can use -as-given to specify that you want the order in
+which the characters appear in the file specified by -char-file to be respected (to generate
+the atlases). This argument is optional and it does not receive any value.
+</p>
+
+<h3>-multiple-images</h3>
+<p>By default, Fontaine will only generate one atlas (whether you specify -char-file or not).
+Once the first atlas is full, Fontaine will stop. You can pass -multiple-images to the program
+to specify that you want to generate atlases for all the characters specified in the plain
+text file specified by -char-file, or, if you are not using -char-file, all the characters in
+the font file.
+</p>
+
+<h3>-sdf</h3>
+<p>By default, Fontaine generates 8 bits per pixel greyscale atlases. You can pass -sdf to
+generate 8 bits per pixel Signed Distance Field atlases.
+</p>
+
+<h2>Examples</h2>
+<pre>
+<code>
+Fontaine.exe -font myfont.otf -output-stem mystem
+Fontaine.exe -font myfont.ttf -font-size 48 -image-size 1024 -output-stem mystem
+Fontaine.exe -output-stem mystem -char-file mycharfile.txt -font myfont.otf
+Fontaine.exe -font myfont.ttf -char-file mycharfile.txt -output-stem mystem -as-given -sdf -multiple-images -load-vert-metrics
+Fontaine.exe -font myfont.otf -char-file mycharfile.txt -verify
+</code>
+</pre>
+
+</body>
+</html>

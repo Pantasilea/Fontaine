@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="UTF8CPP">
+      <UniqueIdentifier>{24484b40-09b1-4daf-9e53-f201d1ffc51c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{9399ae42-de12-488a-9e66-0c372f52a670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Not code">
+      <UniqueIdentifier>{df214b49-f822-43b0-9403-3e685dc8b3c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Not code\Licenses">
+      <UniqueIdentifier>{8b0a43bc-9ade-4c4e-87d1-0e5834a0e02b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\application.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maxrects.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\UTF8CPP\utf8\checked.h">
+      <Filter>UTF8CPP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UTF8CPP\utf8\core.h">
+      <Filter>UTF8CPP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UTF8CPP\utf8\cpp11.h">
+      <Filter>UTF8CPP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UTF8CPP\utf8\cpp17.h">
+      <Filter>UTF8CPP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UTF8CPP\utf8\cpp20.h">
+      <Filter>UTF8CPP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UTF8CPP\utf8.h">
+      <Filter>UTF8CPP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UTF8CPP\utf8\unchecked.h">
+      <Filter>UTF8CPP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mywindows.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mystdint.hpp">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maxrects.hpp">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="source\application.hpp">
+      <Filter>Main</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Manual.html">
+      <Filter>Not code</Filter>
+    </None>
+    <None Include=".gitignore">
+      <Filter>Not code</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="third-party-licenses\libpng.txt">
+      <Filter>Not code\Licenses</Filter>
+    </Text>
+    <Text Include="License.txt">
+      <Filter>Not code\Licenses</Filter>
+    </Text>
+    <Text Include="third-party-licenses\UTF8-CPP.txt">
+      <Filter>Not code\Licenses</Filter>
+    </Text>
+    <Text Include="third-party-licenses\FreeType.txt">
+      <Filter>Not code\Licenses</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
