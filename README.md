@@ -10,7 +10,7 @@ Here is a sample of a generated bitmap font:
 
 ## Building
 
-If you would like to build the program, you can copy-paste the source folder (which contains only .h, .hpp and .cpp files) to your
+To build the program, you can copy-paste the source folder (which contains only .h, .hpp and .cpp files) to your
 desired location and build the program with your preferred build environment. The only extra thing you must do is to tell your
 preferred build environment to include the libpng header files and link the libpng library files (just as if you were making a new
 project that will use libpng); this is because I used vcpkg to get libpng and I programmed Fontaine in Visual Studio so for me
