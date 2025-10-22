@@ -1,5 +1,6 @@
 #pragma once
 
+#ifdef _WIN32
 #define NOBITMAP // GDI is not needed
 #define NOGDICAPMASKS // CC_*, LC_*, PC_*, CP_*, TC_*, RC_
 #define NOVIRTUALKEYCODES // VK_ *
@@ -87,3 +88,4 @@
 #undef NOMCX // Modem Configuration Extensions
 #undef WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
 #undef NOIME // imm.h
+#endif // _WIN32
