@@ -67,6 +67,9 @@
     <None Include=".gitignore">
       <Filter>Not code</Filter>
     </None>
+    <None Include="README.md">
+      <Filter>Not code</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="third-party-licenses\libpng.txt">

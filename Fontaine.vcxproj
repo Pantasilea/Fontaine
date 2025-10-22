@@ -169,6 +169,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="Manual.html" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="License.txt" />

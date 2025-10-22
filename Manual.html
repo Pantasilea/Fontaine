@@ -6,7 +6,7 @@
     <title>Fontaine's manual</title>
 
 <style>
-body { background-color: #000000; color: #FFFFFF; }
+body { background-color: #000000; color: #FFFFFF; font-size: 1.3em; padding-left: 10vw; padding-right: 10vw; }
 h1,h2,h3 { color: #449CF5; }
 a { color: #00FFFF; }
 a:visited { color: #EE82EE; }
@@ -15,16 +15,17 @@ a:visited { color: #EE82EE; }
 </head>
 <body>
 <h1>Fontaine's manual</h1>
-<p>Fontaine is a command line program whose purpose is to be a simple bitmap font generator.
-Simple means that it does not have fancy functionality like (for example) shadows.
+<p>Fontaine is a simple-to-use CLI program that generates bitmap fonts. It also supports the
+generation of Signed Distance Field (SDF) bitmap fonts. For both non-SDF and SDF bitmap fonts,
+it generates 8 bits per pixel PNG images. The non-SDF PNG images are greyscale and antialiased.
 <br><br>
 Fontaine uses
-<a href="https://freetype.org">FreeType</a> to handle font files, glyph rasterisation and metrics,
-<a href="https://github.com/nemtrif/utfcpp">UTF8-CPP</a> to handle Unicode, and
-<a href="https://www.libpng.org/pub/png/libpng.html">libpng</a> to create PNG images.
-<br><br>
-Fontaine can generate greyscale antialiased normal bitmap fonts and Signed Distance Field
-glyph atlases. In both cases, the generated PNG images have 8 bits per pixel.
+<a href="https://freetype.org">FreeType</a> to handle font files, glyph rasterisation and metrics;
+<a href="https://github.com/nemtrif/utfcpp">UTF8-CPP</a> to handle Unicode; and
+<a href="https://www.libpng.org/pub/png/libpng.html">libpng</a> to create PNG images. It also uses
+the Maximal Rectangles (Best Area Fit variation) algorithm described in Jukka Jylänki's
+<a href="https://github.com/juj/RectangleBinPack/blob/master/RectangleBinPack.pdf">document</a>
+for the rectangle bin packing.
 <br><br>
 Fontaine will also generate a single plain text file that will contain the information needed
 to sample and position each glyph. The structure of this file is simple and easy to parse:
@@ -113,9 +114,8 @@ the atlases). This argument is optional and it does not receive any value.
 <h3>-multiple-images</h3>
 <p>By default, Fontaine will only generate one atlas (whether you specify -char-file or not).
 Once the first atlas is full, Fontaine will stop. You can pass -multiple-images to the program
-to specify that you want to generate atlases for all the characters specified in the plain
-text file specified by -char-file, or, if you are not using -char-file, all the characters in
-the font file.
+to specify that you want to generate atlases for all the characters specified in the file
+specified by -char-file, or, if you are not using -char-file, all the characters in the font file.
 </p>
 
 <h3>-sdf</h3>

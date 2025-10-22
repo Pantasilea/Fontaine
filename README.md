@@ -1,9 +1,6 @@
 # Fontaine
 
-Fontaine is a simple-to-use CLI program that generates bitmap fonts (and it also supports the creation of Signed Distance Field fonts).
-
-It uses the Maximal Rectangles (Best Area Fit variation) algorithm described in Jukka Jylänki's [document](https://github.com/juj/RectangleBinPack/blob/master/RectangleBinPack.pdf)
-for the rectangle bin packing.
+Fontaine is a simple-to-use CLI program that generates bitmap fonts (and it also supports the generation of Signed Distance Field fonts).
 
 For more information, please read Manual.html
 
