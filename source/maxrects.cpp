@@ -2,6 +2,9 @@
 
 #include <limits>
 #include <algorithm>
+#include <stdexcept>
+#include <string>
+#include "mystdint.hpp"
 
 Bin::Bin(const int width, const int height, const bool multiple_bins) noexcept
     : m_width {width}, m_height {height}, m_multiple_bins {multiple_bins}
@@ -14,7 +17,7 @@ Bin::Bin(const int width, const int height, const bool multiple_bins) noexcept
     m_free_rectangles.push_back(rect);
 }
 
-void Bin::layout_bulk(std::vector<Rect>& container) noexcept
+void Bin::layout_bulk(std::vector<Rect>& container)
 {
     int bin_instance = 0;
     for(Rect& r : container) {
@@ -25,6 +28,12 @@ void Bin::layout_bulk(std::vector<Rect>& container) noexcept
             reset();
             ++bin_instance;
             it = find_best_free_rectangle(r);
+            if(it == m_free_rectangles.cend()) {
+                std::string error_msg {"Error: The glyph "};
+                error_msg.append(std::to_string(static_cast<uint32>(r.code_point)));
+                error_msg.append(" (UTF-32 code point) didn't fit in an empty bin. The -font-size is too large for the -image-size.");
+                throw std::runtime_error {error_msg};
+            }
         }
         r.x = it->x;
         r.y = it->y;

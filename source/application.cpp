@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <cstdlib>
 #include "mystdint.hpp"
 
 #ifdef _WIN32
@@ -81,16 +82,6 @@ struct Char_info {
     int advance_x = 0;
     int advance_y = 0;
 };
-
-/*
-struct Glyph_rect {
-    char32_t code_point = 0;
-    int glyph_position_x = 0; // position within the image
-    int glyph_position_y = 0;
-    int glyph_width = 0; // image's pixel width
-    int glyph_height = 0;
-};
-*/
 
 bool valid_arg_index(const int index, const int max_index) noexcept
 {
@@ -492,7 +483,15 @@ int App::run(int argc, char** argv)
 
     Bin bin {cli_args.image_size, cli_args.image_size, cli_args.multiple_images};
     if(not cli_args.as_given) std::sort(glyph_rects.begin(), glyph_rects.end(), compare_rects);
-    bin.layout_bulk(glyph_rects);
+    try { bin.layout_bulk(glyph_rects); }
+    catch(const std::runtime_error& e) {
+        std::cout << e.what() << '\n';
+        return EXIT_FAILURE;
+    }
+    if(bin.processed_rectangles() == 0) {
+        std::cout << "Error: -font-size is too large for -image-size\n";
+        return EXIT_FAILURE;
+    }
 
     /* pack the glyphs' textures and information */
 

@@ -22,7 +22,7 @@ class Bin {
 public:
     Bin(const int width, const int height, const bool multiple_bins) noexcept;
 
-    void layout_bulk(std::vector<Rect>& container) noexcept;
+    void layout_bulk(std::vector<Rect>& container);
     int processed_rectangles() const noexcept;
     void reset() noexcept;
 private:
