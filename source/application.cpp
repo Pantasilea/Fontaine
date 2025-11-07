@@ -371,15 +371,13 @@ int App::run(int argc, char** argv)
 
     std::map<char32_t, Char_info> characters;
     std::vector<Rect> glyph_rects; glyph_rects.reserve(256);
-    const FT_Int32 load_flag = (cli_args.load_vert_metrics) ? FT_LOAD_VERTICAL_LAYOUT : FT_LOAD_DEFAULT;
+    const FT_Int32 load_flag = cli_args.load_vert_metrics ? FT_LOAD_VERTICAL_LAYOUT : FT_LOAD_DEFAULT;
     FT_Render_Mode render_mode = cli_args.sdf ? FT_RENDER_MODE_SDF : FT_RENDER_MODE_NORMAL;
     if(cli_args.char_file.empty()) {
         FT_ULong charcode = 0;
         FT_UInt glyph_index = 0;
 
         charcode = FT_Get_First_Char(m_font_face, &glyph_index);
-        if(charcode == 0) charcode = FT_Get_Next_Char(m_font_face, charcode, &glyph_index);
-
         while(glyph_index != 0) {
             error = FT_Load_Glyph(m_font_face, glyph_index, load_flag);
             if(error) {
@@ -438,15 +436,21 @@ int App::run(int argc, char** argv)
             for(const char32_t code_point : code_points) {
                 if(characters.contains(code_point)) continue;
 
-                error = FT_Load_Char(m_font_face, code_point, load_flag);
+                FT_UInt glyph_index = FT_Get_Char_Index(m_font_face, code_point);
+                if(glyph_index == 0u) {
+                    std::cout << "Error: The font file does not contain the character #" << char_number << " in the line #" << line_number << ".\n";
+                    return EXIT_FAILURE;
+                }
+
+                error = FT_Load_Glyph(m_font_face, glyph_index, load_flag);
                 if(error) {
-                    std::cout << "Internal error: Failed to load the character #" << char_number << " of line #" << line_number << ".\n";
+                    std::cout << "Internal error: Failed to load the character #" << char_number << " in the line #" << line_number << ".\n";
                     return EXIT_FAILURE;
                 }
 
                 error = FT_Render_Glyph(m_font_face->glyph, render_mode);
                 if(error) {
-                    std::cout << "Internal error: Failed to render the character #" << char_number << " of line #" << line_number << ".\n";
+                    std::cout << "Internal error: Failed to render the character #" << char_number << " in the line #" << line_number << ".\n";
                     return EXIT_FAILURE;
                 }
 
