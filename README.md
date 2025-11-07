@@ -1,6 +1,7 @@
 # Fontaine
 
-Fontaine is a simple-to-use CLI program that generates bitmap fonts (and it also supports the generation of Signed Distance Field fonts).
+Fontaine is a simple-to-use CLI program that generates bitmap fonts (and it also supports
+the generation of Signed Distance Field fonts).
 
 For more information, please read Manual.html
 
@@ -10,8 +11,10 @@ Here is a sample of a generated bitmap font:
 
 ## Building
 
-To build the program, you can copy-paste the source folder (which contains only .h, .hpp and .cpp files) to your
-desired location and build the program with your preferred build environment. The only extra thing you must do is to tell your
-preferred build environment to include the libpng header files and link the libpng library files (just as if you were making a new
-project that will use libpng); this is because I used vcpkg to get libpng and I programmed Fontaine in Visual Studio so for me
-including png.h just works.
+To build the program, you can copy-paste the source folder (which contains only .h, .hpp
+and .cpp files) to your desired location and build the program with your preferred build
+environment. The only extra thing you must do is to tell your preferred build environment
+to include your own copy of the header files of FreeType (2.13.3) and libpng (1.6.50) and
+link your own copy of their corresponding library files. This is because I used vcpkg to
+obtain FreeType and libpng, and I use Visual Studio so for me including their header files
+and building the project just works.
