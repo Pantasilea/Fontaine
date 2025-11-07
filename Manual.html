@@ -32,16 +32,18 @@ to sample and position each glyph. The structure of this file is simple and easy
 </p>
 <pre>
 <code>
+atlas-dimensions:1024
 linespace:41
 65:0:48:30:22:23:-1:23:20:0
 </code>
 </pre>
-<p>The first line gives you the vertical distance between two consecutive baselines. The rest
-of the lines give you a particular glyph's information in the following order:
+<p>The first line gives you the width and height of the PNG image (the glyph atlas). The second
+line gives you the vertical distance between two consecutive baselines. The rest of the lines
+give you a particular glyph's information in the following order:
 </p>
 <ol start="0">
 <li>UTF-32 code point of the glyph</li>
-<li>Which PNG image contains the glyph</li>
+<li>Which PNG image contains the glyph (see <a href="#abcd">-output-stem</a> below)</li>
 <li>x position of the glyph inside the image</li>
 <li>y position of the glyph inside the image</li>
 <li>Width</li>
@@ -93,7 +95,7 @@ characters weren't found. If missing-chars.txt is empty, it means all the charac
 the file specified by -char-file were found.
 </p>
 
-<h3>-output-stem</h3>
+<h3 id="abcd">-output-stem</h3>
 <p>Used to specify the stem of the filename for the atlases and the plain text file. You
 must supply this argument. For example, if you specify 'Japanese' as the value, then the
 atlases will have the following filenames: Japanese-0.png, Japanese-1.png, Japanese-2.png

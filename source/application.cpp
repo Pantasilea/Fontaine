@@ -502,9 +502,10 @@ int App::run(int argc, char** argv)
         std::cout << "Internal error: Couldn't create the information output file.\n";
         return EXIT_FAILURE;
     }
+    info_file << "atlas-dimensions:" << std::to_string(cli_args.image_size) << '\n';
     info_file << "linespace:" << std::to_string(m_font_face->size->metrics.height >> 6) << '\n';
     std::vector<uint8> atlas; atlas.resize(cli_args.image_size * cli_args.image_size);
-    for(std::vector<Rect>::size_type i = 0; i < processed_rectangles; ++i) {
+    for(int i = 0; i < processed_rectangles; ++i) {
         const Rect& r = glyph_rects[i];
         if(r.bin != current_bin_instance) {
             if(not create_png_image(cli_args.output_stem, current_bin_instance, cli_args.image_size, atlas.data())) {
