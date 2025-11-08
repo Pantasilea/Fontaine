@@ -34,12 +34,14 @@ to sample and position each glyph. The structure of this file is simple and easy
 <code>
 atlas-dimensions:1024
 linespace:41
+notdef:1:16:17:0
 65:0:48:30:22:23:-1:23:20:0
 </code>
 </pre>
 <p>The first line gives you the width and height of the PNG image (the glyph atlas). The second
-line gives you the vertical distance between two consecutive baselines. The rest of the lines
-give you a particular glyph's information in the following order:
+line gives you the vertical distance between two consecutive baselines. The third line gives the
+left bearing, top bearing, advance width and advance height of the .notdef glyph of the font file.
+The rest of the lines give you a particular glyph's information in the following order:
 </p>
 <ol start="0">
 <li>UTF-32 code point of the glyph</li>
@@ -99,7 +101,8 @@ the file specified by -char-file were found.
 <p>Used to specify the stem of the filename for the atlases and the plain text file. You
 must supply this argument. For example, if you specify 'Japanese' as the value, then the
 atlases will have the following filenames: Japanese-0.png, Japanese-1.png, Japanese-2.png
-(and so on). The plain text file will have the following filename: Japanese.txt
+(and so on). The plain text file will have the following filename: Japanese.txt. The PNG
+image for the .notdef glyph will have the following filename: Japanese-notdef.png
 </p>
 
 <h3>-load-vert-metrics</h3>

@@ -9,6 +9,7 @@
 #include <map>
 #include <algorithm>
 #include <cstdlib>
+#include <utility>
 #include "mystdint.hpp"
 
 #ifdef _WIN32
@@ -124,6 +125,32 @@ void place_pixel_data(std::vector<uint8>& atlas, const int atlas_width, const Re
         atlas_ptr += atlas_width;
         glyph_image += glyph_pitch;
     }
+}
+
+bool create_png_image(const int image_width, const int image_height, const uint8* pixel_data, std::vector<uint8>& output)
+{
+    png_image png_descriptor;
+    std::memset(&png_descriptor, 0, sizeof(png_image));
+    png_descriptor.version = PNG_IMAGE_VERSION;
+    png_descriptor.width = image_width;
+    png_descriptor.height = image_height;
+    png_descriptor.format = PNG_FORMAT_GRAY;
+
+    png_alloc_size_t buffer_size;
+    if(not png_image_write_get_memory_size(png_descriptor, buffer_size, 0, pixel_data, 0, NULL)) {
+        std::cout << "Internal error: png_image_write_get_memory_size failed.\n";
+        png_image_free(&png_descriptor);
+        return false;
+    }
+    std::vector<uint8> the_png_image; the_png_image.resize(buffer_size);
+    if(not png_image_write_to_memory(&png_descriptor, the_png_image.data(), &buffer_size, 0, pixel_data, 0, NULL)) {
+        std::cout << "Internal error: png_image_write_to_memory failed.\n";
+        png_image_free(&png_descriptor);
+        return false;
+    }
+    png_image_free(&png_descriptor);
+    output = std::move(the_png_image);
+    return true;
 }
 
 bool create_png_image(const std::string& output_stem, const int current_bin_instance, const int image_size, const uint8* pixel_data)
@@ -508,6 +535,41 @@ int App::run(int argc, char** argv)
     }
     info_file << "atlas-dimensions:" << std::to_string(cli_args.image_size) << '\n';
     info_file << "linespace:" << std::to_string(m_font_face->size->metrics.height >> 6) << '\n';
+    // add the information and generate the image of the .notdef glyph before the other glyphs
+    error = FT_Load_Glyph(m_font_face, 0u, load_flag);
+    if(error) {
+        std::cout << "Internal error: Failed to load the .notdef glyph.\n";
+        return EXIT_FAILURE;
+    }
+    error = FT_Render_Glyph(m_font_face->glyph, render_mode);
+    if(error) {
+        std::cout << "Internal error: Failed to render the .notdef glyph.\n";
+        return EXIT_FAILURE;
+    }
+    std::string notdef_info {std::to_string(m_font_face->glyph->bitmap_left)};
+    notdef_info.append(1, ':').append(std::to_string(m_font_face->glyph->bitmap_top));
+    notdef_info.append(1, ':').append(std::to_string(m_font_face->glyph->advance.x >> 6));
+    notdef_info.append(1, ':').append(std::to_string(m_font_face->glyph->advance.y >> 6));
+    info_file << "notdef:" << notdef_info << '\n';
+
+    std::vector<uint8> notdef_image;
+    if(not create_png_image(m_font_face->glyph->bitmap.width, m_font_face->glyph->bitmap.rows, m_font_face->glyph->bitmap.buffer, notdef_image)) {
+        return EXIT_FAILURE;
+    }
+    std::filesystem::path notdef_path {exe_dir};
+    notdef_path.append(std::string {"output/"} + cli_args.output_stem + "-notdef.png");
+    std::ofstream notdef_image_file {notdef_path, std::ios_base::binary};
+    if(not notdef_image_file) {
+        std::cout << "Error: Couldn't open a file to write the image for the .notdef glyph.\n";
+        return EXIT_FAILURE;
+    }
+    notdef_image_file.write(reinterpret_cast<char*>(notdef_image.data()), notdef_image.size());
+    if(notdef_image_file.fail() or notdef_image_file.bad()) {
+        std::cout << "Internal error: Writing a png image file for the .notdef glyph failed.\n";
+        return EXIT_FAILURE;
+    }
+    notdef_image_file.close();
+    // generate the atlases
     std::vector<uint8> atlas; atlas.resize(cli_args.image_size * cli_args.image_size);
     for(int i = 0; i < processed_rectangles; ++i) {
         const Rect& r = glyph_rects[i];
