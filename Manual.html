@@ -39,8 +39,9 @@ notdef:1:16:17:0
 </code>
 </pre>
 <p>The first line gives you the width and height of the PNG image (the glyph atlas). The second
-line gives you the vertical distance between two consecutive baselines. The third line gives the
-left bearing, top bearing, advance width and advance height of the .notdef glyph of the font file.
+line gives you the vertical distance between two consecutive baselines. The third line gives you
+the left bearing, top bearing, advance width and advance height of the .notdef glyph of the font
+file (a separate PNG image is created for this glyph. See <a href="#abcd">-output-stem</a> below).
 The rest of the lines give you a particular glyph's information in the following order:
 </p>
 <ol start="0">
